@@ -1,1 +1,1 @@
-# amazon-privetracker
+# amazon-pricetracker
