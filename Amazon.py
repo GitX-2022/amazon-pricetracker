@@ -22,14 +22,12 @@ class Amazon_Price:
         price_tag=self.driver.find_element(By.CLASS_NAME,"a-price-whole")
         self.price=price_tag.text
         self.price = price_tag.text.replace(",", "")
-        self.price = int(self.price)
         self.driver.close()
 
     def get_price(self):
         self.driver.get(url=self.url)
         price_tag = self.driver.find_element(By.CLASS_NAME, "a-price-whole")
         self.price = price_tag.text.replace(",","")
-        self.price=int(self.price)
         self.driver.close()
 
 
