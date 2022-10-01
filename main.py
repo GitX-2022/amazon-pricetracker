@@ -152,30 +152,30 @@ def logout():
 @app.route('/add',methods=["POST","GET"])
 @login_required
 def add():
-    form = AddForm()
+    form=AddForm()
     if form.validate_on_submit():
         print(form.item_url.data)
-        product = Amazon_Price(url=form.item_url.data)
+        product=Amazon_Price(url=form.item_url.data)
         product.get_add()
         product_price = product.price
         price = product_price
-        new_item = Items()
-        new_item.name = form.name.data
-        new_item.url_name = product.name
-        new_item.url = form.item_url.data
+        new_item=Items()
+        new_item.name=form.name.data
+        new_item.url_name=product.name
+        new_item.url=form.item_url.data
         print(product_price)
         product_price = product.price.replace(",", "")
         price = float(product_price)
         price = int(price)
-        new_item.price = price
-        new_item.img_url = product.img_url
-        new_item.budget = form.budget.data
-        new_item.low_price = price
-        new_item.author = current_user
+        new_item.price=price
+        new_item.img_url=product.img_url
+        new_item.budget=form.budget.data
+        new_item.low_price=price
+        new_item.author=current_user
         db.session.add(new_item)
         db.session.commit()
         return redirect(url_for('home'))
-    return render_template('add.html', form=form, logged_in=current_user.is_authenticated)
+    return render_template('add.html',form=form,logged_in=current_user.is_authenticated)
 
 
 @app.route('/cart')
@@ -186,18 +186,18 @@ def cart():
 @app.route('/item/<int:item_id>',methods=["GET","POST"])
 @login_required
 def show_item(item_id):
-    item = db.session.query(Items).get(item_id)
-    product = Amazon_Price(url=item.url)
+    item=db.session.query(Items).get(item_id)
+    product=Amazon_Price(url=item.url)
     product.get_price()
     product_price = product.price.replace(",", "")
     price = float(product_price)
     price = int(price)
-    item.price = price
+    item.price=price
     db.session.commit()
-    if (price < int(item.low_price)):
-        item.low_price = price
+    if(price<int(item.low_price)):
+        item.low_price=price
         db.session.commit()
-    return render_template('item.html', item=item, logged_in=current_user.is_authenticated)
+    return render_template('item.html',item=item,logged_in=current_user.is_authenticated)
 
 @app.route('/delete/<int:item_id>')
 def delete(item_id):
