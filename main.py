@@ -13,8 +13,7 @@ from functools import wraps
 from sqlalchemy import Table, Column, Integer, ForeignKey
 from Amazon import Amazon_Price
 from Email import Send_Email
-import redis
-from rq import Queue
+
 
 
 os.environ["SECRET_KEY"]="38493290320383843"
@@ -25,9 +24,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 Bootstrap(app)
 
-##Redis
-r=redis.Redis()
-q=Queue(connection=r)
+
 
 ##WTFORM
 class LoginForm(FlaskForm):
